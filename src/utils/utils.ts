@@ -1,7 +1,7 @@
 import { UserDto } from '../assets/types.ts';
 import consts from '../assets/consts.ts';
 import { IncomingMessage } from 'http';
-import { resolve } from 'path';
+
 
 export const isValidUserData = (object: unknown): object is UserDto => {
   return (
@@ -28,7 +28,7 @@ export const isValidDataToUpdate = (
 };
 
 export const getId = (url: string | undefined) => {
-  if (typeof url === 'undefined') return '';
+  if (!url) return '';
   const splittedUrl = url.match(consts.API_URL_TO_SPLIT);
   return splittedUrl ? splittedUrl[1] : '';
 };
@@ -45,8 +45,10 @@ export const getBody = (request: IncomingMessage): Promise<{}> => {
         try {
           resolve(body ? JSON.stringify(body) : {});
         } catch {
-          reject(() => {throw new Error('Invalid data')});
+          reject(() => {
+            throw new Error('Invalid data');
+          });
         }
-      })
-  }
+      });
+  });
 };

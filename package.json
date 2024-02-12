@@ -10,8 +10,9 @@
   "type": "module",
   "scripts": {
     "start:dev": "cross-env NODE_ENV=development NODE_NO_WARNINGS=1 nodemon",
-    "start:prod": "",
+    "start:prod": "cross-env NODE_ENV=production npm run build && node ./dist/bundle.js",
     "start:multi": "",
+    "build": "webpack",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint \"./**/*.ts\" --fix",
     "test": "jest --silent",
