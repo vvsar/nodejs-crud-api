@@ -9,21 +9,21 @@ export class Checker implements InfoChecker {
   }
 
   async getAllUsers() {
-    return this.storage.getAllUsers();
+    return await this.storage.getAllUsers();
   }
 
   async getUser(id: string) {
     if (!validateId(id)) {
       throw new Error('User ID is not valid');
     }
-    return this.storage.getUser(id);
+    return await this.storage.getUser(id);
   }
 
   async createUser(userData: unknown) {
     if (!isValidUserData(userData)) {
       throw new Error('Invalid data');
     }
-    return this.storage.createUser(userData);
+    return await this.storage.createUser(userData);
   }
 
   async updateUser(id: string, data: unknown) {
@@ -33,13 +33,13 @@ export class Checker implements InfoChecker {
     if (!isValidDataToUpdate(data)) {
       throw new Error('Invalid data');
     }
-    return this.storage.updateUser(id, data);
+    return await this.storage.updateUser(id, data);
   }
 
   async deleteUser(id: string) {
     if (!validateId(id)) {
       throw new Error('User ID is not valid');
     }
-    return this.storage.deleteUser(id);
+    return await this.storage.deleteUser(id);
   }
 }

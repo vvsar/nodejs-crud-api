@@ -1,3 +1,5 @@
+import { IncomingMessage, ServerResponse } from 'http';
+
 export type User = {
   id: string;
   username: string;
@@ -27,4 +29,17 @@ export interface InfoChecker {
   createUser: (user: unknown) => Promise<User>;
   updateUser: (id: string, data: unknown) => Promise<User>;
   deleteUser: (id: string) => Promise<Deleted>;
+}
+
+export type RequestHandler = (
+  request: IncomingMessage,
+  response: ServerResponse<IncomingMessage>,
+) => Promise<void>;
+
+export interface InfoController {
+  getAllUsers: RequestHandler;
+  getUser: RequestHandler;
+  createUser: RequestHandler;
+  updateUser: RequestHandler;
+  deleteUser: RequestHandler;
 }
