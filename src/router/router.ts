@@ -7,14 +7,14 @@ import { HTTPMethods } from '../assets/enums.ts';
 
 export const router = (processPort: number) => {
   const storage = new Storage();
-  // const checker = new Checker(storage);
-  // const controller = new Controller(checker);
+  const checker = new Checker(storage);
+  const controller = new Controller(checker);
 
   return async (
     request: IncomingMessage,
     response: ServerResponse<IncomingMessage>,
   ) => {
-    response.setHeader('Content-Type', 'application/json');
+    // response.setHeader('Content-Type', 'application/json');
 
     try {
       const { method, url } = request;
@@ -30,24 +30,25 @@ export const router = (processPort: number) => {
       }
 
       switch (method) {
-        // case HTTPMethods.GET:
-        //   if (url && url.match(consts.API_URL_WITH_ID)) {
-        //     await controller.getUser(request, response);
-        //   } else {
-        //     await controller.getAllUsers(request, response);
-        //   }
-        //   break;
-        // case HTTPMethods.POST:
-        //   if (url && !url.match(consts.API_URL)) {
-        //     throw new Error('Endpoint is not available');
-        //   }
-        //   await controller.createUser(request, response);
-        //   break;
-        // case HTTPMethods.PUT:
-        //   await controller.updateUser(request, response);
-        //   break;
-        // case HTTPMethods.DELETE:
-        //   await controller.deleteUser(request, response);
+        case HTTPMethods.GET:
+          if (url && url.match(consts.API_URL_WITH_ID)) {
+            await controller.getUser(request, response);
+          } else {
+            await controller.getAllUsers(request, response);
+          }
+          break;
+        case HTTPMethods.POST:
+          if (url && !url.match(consts.API_URL)) {
+            throw new Error('Endpoint is not available');
+          }
+          await controller.createUser(request, response);
+          break;
+        case HTTPMethods.PUT:
+          await controller.updateUser(request, response);
+          break;
+        case HTTPMethods.DELETE:
+          await controller.deleteUser(request, response);
+          break;
         default:
           throw new Error('Method is not supported');
       }

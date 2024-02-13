@@ -21,7 +21,7 @@ export class Storage implements InfoStorage {
 
   async createUser(user: UserDto): Promise<User> {
     const newUser = { ...user, id: createId() };
-    this.users.push();
+    this.users.push(newUser);
     return newUser;
   }
 
@@ -29,6 +29,10 @@ export class Storage implements InfoStorage {
     const userToUpdate = this.users.find((user) => user.id === id);
     if (userToUpdate) {
       const newUser = Object.create(userToUpdate);
+      let key1: keyof typeof userToUpdate;
+      for (key1 in userToUpdate) {
+        newUser[key1] = userToUpdate[key1];
+      }
       let key: keyof typeof data;
       for (key in data) {
         newUser[key] = data[key];

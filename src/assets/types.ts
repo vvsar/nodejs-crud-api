@@ -26,8 +26,10 @@ export interface InfoStorage {
 export interface InfoChecker {
   getAllUsers: () => Promise<User[]>;
   getUser: (id: string) => Promise<User>;
-  createUser: (user: unknown) => Promise<User>;
-  updateUser: (id: string, data: unknown) => Promise<User>;
+  // createUser: (user: unknown) => Promise<User>;
+  createUser: (user: UserDto) => Promise<User>;
+  // updateUser: (id: string, data: unknown) => Promise<User>;
+  updateUser: (id: string, data: UserDto) => Promise<User>;
   deleteUser: (id: string) => Promise<Deleted>;
 }
 
